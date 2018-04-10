@@ -1,0 +1,31 @@
+{
+  "name": "stagem/zfc-layout",
+  "description": "ZF Layout Module",
+  "type": "zf-module",
+  "license": "MIT",
+  "keywords": [
+    "zf3",
+    "zf-expressive",
+    "layout"
+  ],
+  "authors": [
+    {
+      "name": "Serhii Popov",
+      "email": "popow.serhii@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Stagem\\ZfcLayout\\": "src/"
+    }
+  },
+  "extra": {
+    "zf": {
+      "config-provider": "Stagem\\ZfcLayout\\ConfigProvider"
+    }
+  }
+}
