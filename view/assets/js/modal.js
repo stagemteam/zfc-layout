@@ -8,6 +8,12 @@ $(document).on('click', '[data-toggle="modal"]', function (e) {
 		return false;
 	}
 
+	// Skip if element configuration isn't correct.
+  // This allow use native configuration of Modal module
+	if (!elm.data('body') && !elm.data('href')) {
+		return false;
+	}
+
 	// @link http://stackoverflow.com/a/4158203
 	var modal = $('<div/>', {
 			'id': elm.data('target'),
