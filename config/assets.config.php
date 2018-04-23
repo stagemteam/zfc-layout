@@ -8,6 +8,9 @@ return [
             //'@front_css',
             '@core_js',
         ],
+        'admin(.*)' => [
+            '@core_js',
+        ],
     ],
 
     'modules' => [
@@ -19,6 +22,7 @@ return [
                         'js/modal.js',
                         'js/refresh.js',
                         'js/ajax.js',
+                        'js/datetimepicker.js',
                     ],
                 ],
             ],
