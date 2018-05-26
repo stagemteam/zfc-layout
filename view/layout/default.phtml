@@ -1,0 +1,92 @@
+<?= $this->doctype() ?>
+<?php
+//$controller = $this->layout()->route ? $this->layout()->route->getParam('controller') : '';
+//$action = $this->layout()->route ? $this->layout()->route->getParam('action') : '';
+//$parent = $this->layout()->route ? $this->layout()->route->getParam('parent') : '';
+
+//$cookie = $this->layout()->request ? $this->layout()->request->getCookie() : '';
+
+?>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!--<meta name="author" content="Popov Company" />
+    <meta name="description" content="Popov Cloud - Business System" />
+    <meta name="keywords" content="e-commerce" />
+    <meta name="application-name" content="Popov Cloud - Business System" />-->
+
+    <?= $this->headTitle($title = 'Collective Mind')->setSeparator(' - ')->setAutoEscape(false) ?>
+    <?= $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+    <?= $this->headLink() ?>
+    <?= $this->headStyle() ?>
+
+</head>
+<body>
+<?= $this->partial('widget::header') ?>
+
+<div class="wrapper">
+    <main>
+
+        <!-- menu -->
+        <?php if ($this->resolver('widget/menu')) : ?>
+            <?= $this->partial('widget/menu'); ?>
+        <?php endif; ?>
+        <!-- End menu -->
+
+        <div class="content">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="col-lg-8">
+                            <!-- breadcrumb -->
+                            <?php if ($this->resolver('admin/breadcrumb')) : ?>
+                                <?= $this->partial('admin/breadcrumb'); ?>
+                            <?php endif; ?>
+                            <!-- End breadcrumb -->
+                        </div>
+
+                        <div class="col-lg-4">
+                            <?php if ($this->resolver('cart/mini-cart')) : ?>
+                                <?= $this->partial('cart/mini-cart') ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php /*
+                            <div class="row">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">основные данные</a></li>
+                                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">документы</a></li>
+                                    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">история</a></li>
+                                </ul>
+                            </div>
+                            */ ?>
+                </div>
+            </div>
+            <div class="content-body">
+                <div class="container">
+
+	                <?php if ($this->resolver('widget::flash-messages')) : ?>
+                        <?= $this->partial('widget::flash-messages') ?>
+                    <?php endif; ?>
+
+                    <?= $this->content ?>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- HEADER END -->
+</div>
+<?php // main content ?>
+
+<?= $this->partial('widget::footer') ?>
+
+<?php // Include all JS ?>
+<?= $this->headScript() ?>
+<?= $this->inlineScript() ?>
+</body>
+</html>
