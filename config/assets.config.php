@@ -3,6 +3,8 @@ namespace Stagem\ZfcLayout;
 
 return [
 
+    'mergeActionAndRouterConfig' => true,
+
     'routes' => [
         'default(.*)' => [
             //'@front_css',
