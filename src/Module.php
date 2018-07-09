@@ -2,6 +2,7 @@
 
 namespace Stagem\ZfcLayout;
 
+use Zend\Mvc\Controller\AbstractController;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\View\Model\JsonModel;
@@ -25,15 +26,25 @@ class Module
     public function onBootstrap(MvcEvent $e)
     {
         $eventManager = $e->getApplication()->getEventManager();
-        $eventManager->attach(MvcEvent::EVENT_DISPATCH, [$this, 'handleDispatch']);
-        $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'handleError']);
+        $sharedEvents = $eventManager->getSharedManager();
+
+        $moduleRouteListener = new ModuleRouteListener();
+        $moduleRouteListener->attach($eventManager);
+
+        // Register the event listener method.
+        $sharedEvents->attach(AbstractController::class, MvcEvent::EVENT_DISPATCH, [$this, 'handleDispatch']);
+        $sharedEvents->attach(AbstractController::class, MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'handleError']);
+
+        #$eventManager->attach(MvcEvent::EVENT_DISPATCH, [$this, 'handleDispatch']);
+        #$eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'handleError']);
     }
 
     public function handleDispatch(MvcEvent $e)
     {
+        $request = $e->getRequest();
         // inject global variables in layout after controller initialization
-        if ($e->getRequest() instanceof HttpRequest
-            && $e->getRequest()->isXmlHttpRequest()
+        if ($request instanceof HttpRequest
+            && $request->isXmlHttpRequest()
             && !$e->getViewModel()->terminate()
         ) {
             // set empty layout for all not terminated ajax request
@@ -60,5 +71,10 @@ class Module
                 $response->setStatusCode($exception->getCode());
             }
         }
+    }
+
+    protected function isXmlHttpRequest()
+    {
+
     }
 }
